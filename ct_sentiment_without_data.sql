@@ -15,7 +15,7 @@ create table ct_users (
 create table ct_tweets (
 	id VARCHAR(20) NOT NULL PRIMARY KEY,
 	user_id VARCHAR(20) REFERENCES ct_users(id) NOT NULL,
-	content VARCHAR(280) NOT NULL,
+	content VARCHAR(320) NOT NULL,
 	creation_date TIMESTAMP NOT NULL,
 	cashtags VARCHAR(200),
 	sentiment VARCHAR(10)

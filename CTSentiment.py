@@ -66,7 +66,7 @@ follows = api.friends_ids(486022059)
 # In[130]:
 
 
-with open('CTSentiment/twitter-sources.data', encoding = 'utf-8') as ct_sources:
+with open('twitter-sources.data', encoding = 'utf-8') as ct_sources:
     source_ids = ct_sources.read().split(',')
 
 
@@ -113,6 +113,8 @@ TO_TIMESTAMP(%s, 'YYYY,MM,DD,HH24,MI,SS'),
 ON CONFLICT (id) DO NOTHING;
 """
 
+print("Updating tweets...")
+
 for ctuser in source_ids:
     timeline = api.user_timeline(ctuser)
     tweet_details = []
@@ -131,7 +133,8 @@ for ctuser in source_ids:
         cursor.executemany(tweetquery, tweet_details)
         db_conn.commit()
         count = cursor.rowcount
-        print(count, "Record updated.")
+        if count > 0:
+            print(count, "record(s) added.")
     except psycopg2.Error as error:
         print("Error in insert/update operation: ", error)
     
